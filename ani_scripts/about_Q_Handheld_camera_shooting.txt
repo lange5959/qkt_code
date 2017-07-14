@@ -1,0 +1,10 @@
+﻿<font font-family: Microsoft YaHei size=5><b>01  Camera Group <\b> 给相机加控制器<br>
+选择一个相机，然后点击Camera Rig<br>
+
+<br>
+02  Create Camera  创建相机（带控制器）<br>
+输入相机名字，然后点击Create Camera<br>
+<br>
+03  给相机加手持晃动效果<br>
+Magnitude : 相机晃动力度。输入1代表晃动幅度为（+1， -1）（其实就是修改相机的位移或旋转数值<br>
+Frame Step : 输入5，代表每隔5帧自动k一次<br></font>

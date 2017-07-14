@@ -1,0 +1,8 @@
+﻿<font font-family: Microsoft YaHei size=5>
+<b>01 如何删除层 <\b><br>
+在左侧栏选择层，按键盘delete键<br>
+
+02  如何查看层内物体  <br>
+在左侧栏选择层，按键盘空格键，会在右侧显示层内容<br>
+<br>
+</font>

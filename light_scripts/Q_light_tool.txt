@@ -1,0 +1,11 @@
+﻿<font font-family: Microsoft YaHei size=5><b>
+01  关于 connect 按钮 <\b><br>
+选择多个灯，点击connect按钮<br>
+会将多个灯的参数放在一起调节(不能同时混合选择maya灯光和ar灯光)<br>
+02  关于 save 按钮 <\b><br>
+选择多个灯，点击save按钮<br>
+会将所选择的灯光保存在maya文件同目录下的light文件夹里
+<br>
+
+
+</font>
