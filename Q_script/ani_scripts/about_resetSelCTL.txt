@@ -1,0 +1,8 @@
+﻿<font font-family: Microsoft YaHei size=5><b>
+01  resetSel <\b> 选择所有控制器，点击按钮，会将所有参数恢复默认<br>
+
+02  gotocenter  <br>
+选择大环，点击按钮，使其回到网格世界中心<br>
+<br>
+03  change two value<br>
+选择两个环，该按钮会将第一个选择物体的位移旋转值复制（并改成负数）到第二个选择的物体上<br></font>
