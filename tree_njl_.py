@@ -46,7 +46,7 @@ class TreeWidget(QtGui.QMainWindow):
             lever = 1
             self.tree = QtGui.QTreeWidget()
             self.root = QtGui.QTreeWidgetItem(self.tree)
-            self.root.setText(0,'assets')
+            self.root.setText(0,'')
             self.myQueue.append(self.root)
         else:
             lever += 1
