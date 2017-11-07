@@ -247,7 +247,7 @@ class TreeModel(QtCore.QAbstractItemModel):
         
         self.buildTree(parent=parent, level=0, maxLevel=5, maxSiblings=5)
         
-    def buildTree(self,parent,level=0,maxLevel=5,maxSiblings=5,nameString=""):
+    def buildTree(self,parent,level=0,maxLevel=3,maxSiblings=5,nameString=""):
         
         
         if level < (maxLevel-1):

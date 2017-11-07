@@ -48,17 +48,25 @@ class TreeOfTableWidget(QTreeView):
             model.load(filename, nesting, separator)
         except IOError as e:
             QMessageBox.warning(self, "Server Info - Error", str(e))
-        self.activated[QModelIndex].connect(self.activate)  # QModelIndex 双击发送信号index
+        self.activated[QModelIndex].connect(self.activate)
+        # QModelIndex 双击发送信号index
         self.expanded.connect(self.expand)
         self.expand()
 
     def currentFields(self):
+        # 一整条数据（当前选中的）
         return self.model().asRecord(self.currentIndex())
+        # 返回一个列表，必须是叶子节点
 
     def activate(self, index):
-        self.activated_signal.emit(self.model().asRecord(index))  # self.model().asRecord(index)
+        # 双击
+        self.activated_signal.emit(self.model().asRecord(index))
+        # 返回一个列表，必须是叶子节点
+        # self.model().asRecord(index)
 
     def expand(self):
+        # 自动设置适配列宽度
+        print(1)
         for column in range(self.model().columnCount(
                 QModelIndex())):
             self.resizeColumnToContents(column)
@@ -93,9 +101,11 @@ class MainForm(QMainWindow):
         self.statusBar().showMessage("Ready...", 5000)
 
     def picked(self):
+        # 退出时执行
         return self.treeWidget.currentFields()
 
     def activated(self, fields):
+        # 双击执行
         self.statusBar().showMessage("*".join(fields), 60000)
 
 

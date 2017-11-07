@@ -1,7 +1,4 @@
-# / home / yrd / eric_workspace / chap16 / treeoftable.py
-
-# !/usr/bin/env python3
-
+# coding=utf-8
 import bisect
 import codecs
 from PyQt5.QtCore import (QAbstractItemModel, QModelIndex, QVariant, Qt)
@@ -41,20 +38,28 @@ class BranchNode(object):
         return -1
 
     def childWithKey(self, key):
+        print('*'*5)
         if not self.children:
+            print("childWithKey  key","None")
             return None
+        print("childWithKey  key", "not None")
         # Causes a -3 deprecation warning. Solution will be to
         # reimplement bisect_left and provide a key function.
         i = bisect.bisect_left(self.children, (key, None))
+        # bisect_left 该函数用入处理将会插入重复数值的情况，返回将会插入的位置：
         if i < 0 or i >= len(self.children):
             return None
         if self.children[i][KEY] == key:
+            # KEY = 0
+            print(self.children, '<<<self.children[i][KEY]')
             return self.children[i][NODE]
         return None
 
     def insertChild(self, child):
         child.parent = self
+        # insort插入操作（自动排序），（name, BranchNode_Object)
         bisect.insort(self.children, (child.orderKey(), child))
+        print(self.children, "<<<insertChild", "^^^^^^", "self.name>>>", self.name)
 
     def hasLeaves(self):
         if not self.children:
@@ -104,6 +109,7 @@ class TreeOfTableModel(QAbstractItemModel):
         assert nesting > 0
         self.nesting = nesting
         self.root = BranchNode("")
+        # BranchNode??
         exception = None
         fh = None
         try:
@@ -111,6 +117,7 @@ class TreeOfTableModel(QAbstractItemModel):
                 if not line:
                     continue
                 self.addRecord(line.split(separator), False)
+                # addRecord??
         except IOError as e:
             exception = e
         finally:
@@ -124,31 +131,45 @@ class TreeOfTableModel(QAbstractItemModel):
                 raise exception
 
     def addRecord(self, fields, callReset=True):
+        # fields是一个列表，一整条信息，一行
+        # load函数传进来的
         assert len(fields) > self.nesting
         root = self.root
+        # root 是一个BranchNode对象
         branch = None
         for i in range(self.nesting):
             key = fields[i].lower()
-            # print(key)  # australia (no state) adelaide # country/state/city
+            # print(key)， key是个字符串，比如国家名字(sheng/city)
+            # australia (no state) adelaide
+            # country/state/city
+            print(key, '<<<')
             branch = root.childWithKey(key)
             if branch is not None:
                 root = branch
+                print(1, 'root?')
             else:
-                branch = BranchNode(fields[i])
+                print(2, '2?')
+                branch = BranchNode(fields[i])  # 第一次循环创建3个branch对象
+                # insertChild， children插入操作（自动排序），（name, BranchNode_Object)
                 root.insertChild(branch)
                 root = branch
+                print(root.name, "---root.name")
+        print('-'*20)
         assert branch is not None
         items = fields[self.nesting:]
         self.columns = max(self.columns, len(items))
         branch.insertChild(LeafNode(items, branch))
+        print('-'*50)
         if callReset:
             self.beginResetModel()
             self.endResetModel()
 
     def asRecord(self, index):
         leaf = self.nodeFromIndex(index)
+        # 返回一个节点
+        # 判断返回的节点是不是叶子
         if leaf is not None and isinstance(leaf, LeafNode):
-            return leaf.asRecord()
+            return leaf.asRecord()  # 必须是叶子节点才行
         return []
 
     def rowCount(self, parent):
@@ -200,5 +221,6 @@ class TreeOfTableModel(QAbstractItemModel):
         return self.createIndex(row, 0, parent)
 
     def nodeFromIndex(self, index):
+        # internalPointer，返回一个节点的引用
         return (index.internalPointer()
                 if index.isValid() else self.root)
