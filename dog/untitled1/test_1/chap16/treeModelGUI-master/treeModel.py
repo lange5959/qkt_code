@@ -1,11 +1,12 @@
-
+# coding=utf-8
 from PyQt4 import QtCore, QtGui
 import cPickle
 from copy import deepcopy
 
+
 class TreeItem(object):
     
-    def __init__(self,displayData,parent=None):
+    def __init__(self, displayData, parent=None):
         self.parent = parent
         self.displayData = displayData
         self.children = []
@@ -76,8 +77,7 @@ class TreeModel(QtCore.QAbstractItemModel):
         else:
             return None
         
-
-    def flags( self, index ):
+    def flags(self, index):
         '''Valid items are selectable, editable, and drag and drop enabled. Invalid indices (open space in the view)
         are also drop enabled, so you can drop items onto the top level.
         '''
@@ -180,7 +180,7 @@ class TreeModel(QtCore.QAbstractItemModel):
         self.dataChanged.emit( parentIndex, parentIndex )
         return True
     
-    def moveItem(self,sourceParentIndex,sourceRow,destinationParentIndex,destinationRow):
+    def moveItem(self, sourceParentIndex, sourceRow, destinationParentIndex, destinationRow):
         """Move an item from sourceParentIndex, sourceRow to 
         destinationParentIndex, destinationRow"""
         
@@ -221,7 +221,7 @@ class TreeModel(QtCore.QAbstractItemModel):
     def insertRow(self, row, parent): 
         return self.insertRows(row, 1, parent) 
     
-    def insertRows( self, row, count, parentIndex):
+    def insertRows(self, row, count, parentIndex):
         '''Add a number of rows to the model at the given row and parent.'''
         self.beginInsertRows( parentIndex, row, row+count-1 )
         self.endInsertRows()
@@ -242,13 +242,11 @@ class TreeModel(QtCore.QAbstractItemModel):
     def itemFromIndex(self, index): 
         return index.internalPointer() if index.isValid() else self.root 
 
+    def setupModelData(self, parent):
         
-    def setupModelData(self,parent):
+        self.buildTree(parent=parent, level=0, maxLevel=3, maxSiblings=2)
         
-        self.buildTree(parent=parent, level=0, maxLevel=5, maxSiblings=5)
-        
-    def buildTree(self,parent,level=0,maxLevel=3,maxSiblings=5,nameString=""):
-        
+    def buildTree(self, parent, level=0, maxLevel=3, maxSiblings=5, nameString="7_"):
         
         if level < (maxLevel-1):
             for siblingCounter in range(maxSiblings):
@@ -270,5 +268,3 @@ class TreeModel(QtCore.QAbstractItemModel):
             
             newItem = TreeItem(displayData=newDisplayData,parent=parent)        
             parent.appendChild(newItem)
-
-    
