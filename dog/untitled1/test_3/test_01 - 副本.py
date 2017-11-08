@@ -1,0 +1,1 @@
+WritePath(rename.decode("utf-8").encode("gbk"), "rename.bat")

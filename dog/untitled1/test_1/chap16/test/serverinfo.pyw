@@ -5,6 +5,11 @@ import sys
 from PyQt5.QtCore import (QModelIndex, QVariant, Qt, pyqtSignal)
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QMessageBox, QShortcut, QTreeView)
 from PyQt5.QtGui import QKeySequence, QPixmap
+
+from PyQt5 import QtWidgets
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+
 import treeoftable
 
 
@@ -44,6 +49,9 @@ class TreeOfTableWidget(QTreeView):
         self.setUniformRowHeights(True)
         model = ServerModel(self)
         self.setModel(model)
+        self.filename = filename
+        self.nesting = nesting
+        self.separator = separator
         try:
             model.load(filename, nesting, separator)
         except IOError as e:
@@ -71,6 +79,9 @@ class TreeOfTableWidget(QTreeView):
                 QModelIndex())):
             self.resizeColumnToContents(column)
 
+    def add_data(self, filename, nesting, separator):
+        self.model().addinfo()
+
 
 class MainForm(QMainWindow):
     def __init__(self, filename, nesting, separator, parent=None):
@@ -90,7 +101,19 @@ class MainForm(QMainWindow):
         self.treeWidget = TreeOfTableWidget(filename, nesting,
                                             separator)
         self.treeWidget.model().headers = headers
-        self.setCentralWidget(self.treeWidget)
+
+        self.button = QtWidgets.QPushButton("add")
+
+        layout = QtWidgets.QVBoxLayout(self)
+        layout.addWidget(self.treeWidget)
+        layout.addWidget(self.button)
+
+        widget = QtWidgets.QWidget()
+        widget.setLayout(layout)
+
+        self.setCentralWidget(widget)
+
+        self.button.clicked.connect(self.add_data_button)
 
         QShortcut(QKeySequence("Escape"), self, self.close)
         QShortcut(QKeySequence("Ctrl+Q"), self, self.close)
@@ -107,6 +130,9 @@ class MainForm(QMainWindow):
     def activated(self, fields):
         # 双击执行
         self.statusBar().showMessage("*".join(fields), 60000)
+
+    def add_data_button(self):
+        self.treeWidget.model().addinfo()
 
 
 app = QApplication(sys.argv)

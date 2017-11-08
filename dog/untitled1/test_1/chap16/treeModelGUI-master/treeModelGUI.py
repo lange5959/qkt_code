@@ -17,7 +17,7 @@ class MainWindow(QtGui.QMainWindow):
         self.resize(600,400)
         self.setWindowTitle("Treeview Example")
 
-        #self.treeview = QtGui.QTreeView(self)
+        # self.treeview = QtGui.QTreeView(self)
         
         self.model = treeModel.TreeModel()
         
@@ -74,7 +74,6 @@ class MyTreeView(QtGui.QTreeView):
         
         print(displayData[0])
     
-    
     def openMenu(self, position):
         
         self.popup_menu = QtGui.QMenu(parent=self)
@@ -91,7 +90,6 @@ class MyTreeView(QtGui.QTreeView):
         
         self.popup_menu.exec_(self.viewport().mapToGlobal(position))
       
-        
     def new(self):
         """Unfinnished"""
         currentIndex = self.currentIndex()
@@ -146,7 +144,6 @@ class MyTreeView(QtGui.QTreeView):
                                       destinationParentIndex=destinationParentIndex,
                                       destinationRow = row)
 
-    
     def deleteItem(self):
         """Deletes the current item (node)"""
         
