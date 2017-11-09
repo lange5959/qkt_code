@@ -1,0 +1,8 @@
+Australia*(No State)*Kenwick*Escape Net*Apache/1.1.1*203.25.185.2
+Australia*(No State)*(Unknown City)*Telstra Net*Apache/1.3.9*210.8.232.2
+Australia*(No State)*(Unknown City)*Telstra Net*Apache/1.3.9*210.8.224.2
+Australia*(No State)*(Unknown City)*Cyberlink Accsess Systems*Apache/1.3b5*203.24.198.1
+Australia*(No State)*Flagstaff Hill*South Australia's Largest ISP*WN/2.0.6*203.11.90.240
+Australia*(No State)*(Unknown City)*Satori Traceroute gateway*Apache/1.3.9*203.21.11.200
+Australia*(No State)*Brisbane*Brisbane Internet Technology*Apache/1.3.3*203.18.94.3
+Australia*(No State)*(Unknown City)*NSW Regional Network Organisation*Apache/1.3.3*203.15.123.114

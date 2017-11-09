@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-# 搜索
+# tree nie-jia-li
 import requests
 search = ""  # 搜索数据相似的名字，若不填为搜索全部 id
 inputfiled = "id"  # 现在能查询5个字段值{id name description,path,pid}

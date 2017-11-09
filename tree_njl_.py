@@ -9,10 +9,13 @@ r = requests.get('http://192.168.0.34/phpconn/find.php', params=payload)
 # print r.text
 tree_info = []
 for i in r.json():
+    # print i
     tree_name = i['name']
     tree_info_part = [int(i['id']), int(i['pid']), tree_name]
     tree_info.append(tree_info_part)
-print tree_info
+print '>'*10
+# print tree_info
+print '*'*100
 
 import sys
 from PyQt4 import QtGui
@@ -27,35 +30,47 @@ class TreeWidget(QtGui.QMainWindow):
         QtGui.QWidget.__init__(self, parent)
         parent = 0
         lever = 1
-        #arr = [[1, 0, "modle1"], [2, 1, "modle2"], [3, 1, "modle3"], [4, 2, "modle4"], [5, 0, "modle5"],[6, 2, "modle6"],[7, 0, "modle7"]]
-        arr = tree_info
+        # [id,pid,name]
+        arr = [[2, 1, "modle2"], [1, 0, "modle1"], [3, 5, "modle3"], [4, 2, "modle4"], [5, 0, "modle5"],[6, 2, "modle6"],[7, 0, "modle7"]]
+        # arr = tree_info
+        self.num = len(arr)
 
-        self.setWindowTitle('Tree00Widget')
+        self.setWindowTitle('tree njl')
+
+        self.tree = QtGui.QTreeWidget()
+        self.tree.setColumnCount(2)
+        self.tree.setHeaderLabels(['Key', 'Value'])
+        self.root = QtGui.QTreeWidgetItem(self.tree)
+        self.root.setText(0, 'model')
 
         self.myQueue = []
+        self.myQueue.append(self.root)
         self.classify(arr, parent, lever)
-        print self.myQueue
         self.tree.addTopLevelItem(self.root)
         self.setCentralWidget(self.tree)
+        print self.myQueue
 
     def classify(self, arr, parent, lever):
 
-        num = len(arr)
+
         # print num
         if parent == 0:
             lever = 1
-            self.tree = QtGui.QTreeWidget()
-            self.root = QtGui.QTreeWidgetItem(self.tree)
-            self.root.setText(0,'')
-            self.myQueue.append(self.root)
+
+            # self.myQueue.append(self.root)
         else:
             lever += 1
-        for i in range(0, num):
+        for i in range(0, self.num):
             if arr[i][1] == parent:
-                self.treeq=i
-                self.treeq= QtGui.QTreeWidgetItem(self.myQueue[arr[i][1]])
-                self.treeq.setText(0, (arr[i][2]))
-                self.myQueue.append(self.treeq)
+                # self.treeitem = i
+                # [id,pid,name]
+                print arr[i][2]
+                print self.myQueue[arr[i][1]]
+                self.treeitem = QtGui.QTreeWidgetItem(self.myQueue[arr[i][1]])
+                self.treeitem.setText(0, (arr[i][2]))
+                # self.treeitem.setText(1, 'name1')
+
+                self.myQueue.append(self.treeitem)
 
                 self.classify(arr, arr[i][0], lever)
 
