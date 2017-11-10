@@ -139,7 +139,7 @@ class MainForm(QMainWindow):
 
 
 app = QApplication(sys.argv)
-nesting = 3
+nesting = 2
 if len(sys.argv) > 1:
     try:
         nesting = int(sys.argv[1])

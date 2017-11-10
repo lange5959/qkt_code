@@ -109,7 +109,7 @@ class TreeModel(QtCore.QAbstractItemModel):
         else:
             return QtCore.QModelIndex()
     
-    def parent( self, index ):
+    def parent(self, index):
         '''Returns a QMoelIndex for the parent of the item at the given index.'''
         item = self.itemFromIndex( index )
         parent = item.parent
@@ -128,11 +128,11 @@ class TreeModel(QtCore.QAbstractItemModel):
 
         return parent.childCount()
     
-    def supportedDropActions( self ):
+    def supportedDropActions(self):
         '''Items can be moved and copied (but we only provide an interface for moving items in this example.'''
         return QtCore.Qt.MoveAction | QtCore.Qt.CopyAction
    
-    def flags( self, index ):
+    def flags(self, index):
         '''Valid items are selectable, editable, and drag and drop enabled. Invalid indices (open space in the view)
         are also drop enabled, so you can drop items onto the top level.
         '''
@@ -142,12 +142,12 @@ class TreeModel(QtCore.QAbstractItemModel):
         return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsDropEnabled | QtCore.Qt.ItemIsDragEnabled |\
                QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEditable
 
-    def mimeTypes( self ):
+    def mimeTypes(self):
         '''The MimeType for the encoded data.'''
         types = QtCore.QStringList( 'application/x-pynode-item-instance' )
         return types
     
-    def mimeData( self, indices ):
+    def mimeData(self, indices):
         '''Encode serialized data from the item at the given index into a QMimeData object.'''
         data = ''
         item = self.itemFromIndex( indices[0] )
@@ -159,7 +159,7 @@ class TreeModel(QtCore.QAbstractItemModel):
         mimedata.setData( 'application/x-pynode-item-instance', data )
         return mimedata
 
-    def dropMimeData( self, mimedata, action, row, column, parentIndex ):
+    def dropMimeData(self, mimedata, action, row, column, parentIndex ):
         '''Handles the dropping of an item onto the model.
          
         De-serializes the data into a TreeItem instance and inserts it into the model.
@@ -201,7 +201,7 @@ class TreeModel(QtCore.QAbstractItemModel):
         
         self.dataChanged.emit( destinationParentIndex, destinationParentIndex )
     
-    def copyItem(self,sourceParentIndex,sourceRow,destinationParentIndex,destinationRow):
+    def copyItem(self,sourceParentIndex, sourceRow, destinationParentIndex, destinationRow):
         """Copy an item from sourceParentIndex, sourceRow to 
         destinationParentIndex, destinationRow"""
         
@@ -230,7 +230,7 @@ class TreeModel(QtCore.QAbstractItemModel):
     def removeRow(self, row, parentIndex): 
         return self.removeRows(row, 1, parentIndex) 
     
-    def removeRows( self, row, count, parentIndex ):
+    def removeRows(self, row, count, parentIndex):
         '''Remove a number of rows from the model at the given row and parent.'''
         self.beginRemoveRows( parentIndex, row, row+count-1 )
         parent = self.itemFromIndex( parentIndex )
@@ -243,23 +243,19 @@ class TreeModel(QtCore.QAbstractItemModel):
         return index.internalPointer() if index.isValid() else self.root 
 
     def setupModelData(self, parent):
-        
         self.buildTree(parent=parent, level=0, maxLevel=5, maxSiblings=2)
         
     def buildTree(self, parent, level=0, maxLevel=3, maxSiblings=5, nameString="7_"):
         
         if level < (maxLevel-1):
             for siblingCounter in range(maxSiblings):
-                
                 newNameString = nameString + str(siblingCounter)
-
-                newDisplayData = (newNameString,)    
-                
+                newDisplayData = (newNameString,)
                 newItem = TreeItem(displayData=newDisplayData, parent=parent)
                 parent.appendChild(newItem)
-                
-                #Add some children, grand children etc to the newItem:
-                self.buildTree(parent=newItem, level = level + 1, maxLevel=maxLevel, maxSiblings=maxSiblings,nameString=newNameString)
+                # Add some children, grand children etc to the newItem:
+                # self.buildTree(parent=newItem, level=level + 1,
+                # maxLevel=maxLevel, maxSiblings=maxSiblings, nameString=newNameString)
 
         else:
             #Leaf level reached:
